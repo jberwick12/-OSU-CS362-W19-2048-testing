@@ -11,7 +11,6 @@ function KeyboardInputManager() {
     this.eventTouchmove     = "touchmove";
     this.eventTouchend      = "touchend";
   }
-
   this.listen();
 }
 
@@ -20,6 +19,7 @@ KeyboardInputManager.prototype.on = function (event, callback) {
     this.events[event] = [];
   }
   this.events[event].push(callback);
+  console.log('keyboard_input:Line:22:UNKNOWN:prototype.on = function has been executed');
 };
 
 KeyboardInputManager.prototype.emit = function (event, data) {
@@ -29,6 +29,7 @@ KeyboardInputManager.prototype.emit = function (event, data) {
       callback(data);
     });
   }
+  console.log('keyboard_input:line:32:UNKNOWN:prototype.emit = function has been executed');
 };
 
 KeyboardInputManager.prototype.listen = function () {
@@ -130,15 +131,18 @@ KeyboardInputManager.prototype.listen = function () {
 KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
   this.emit("restart");
+  console.log('keyboard_input:line:134:UNKNOWN:prototype.restart = function has been executed');
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {
   event.preventDefault();
   this.emit("keepPlaying");
+  console.log('keyboard_input:line:140:UNKNOWN:prototype.keepPlaying = has been executed');
 };
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
   var button = document.querySelector(selector);
   button.addEventListener("click", fn.bind(this));
   button.addEventListener(this.eventTouchend, fn.bind(this));
+  console.log('keyboard_input:line147:UNKNOWN:prototype.bindButtonPress = has been executed');
 };

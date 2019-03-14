@@ -3,8 +3,8 @@ function HTMLActuator() {
   this.scoreContainer   = document.querySelector(".score-container");
   this.bestContainer    = document.querySelector(".best-container");
   this.messageContainer = document.querySelector(".game-message");
-
   this.score = 0;
+  console.log('htmlactualtor:Line7:Value:Function:Actualtor = Actualator has been executed' );
 }
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
@@ -37,11 +37,13 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continueGame = function () {
+  console.log('html_actuator:Value:Function:continueGame = function has been executed');
   this.clearMessage();
 };
 
 HTMLActuator.prototype.clearContainer = function (container) {
   while (container.firstChild) {
+    console.log('html_actuator:Value:Function:clearcontainer = function has been executed');
     container.removeChild(container.firstChild);
   }
 };
@@ -92,14 +94,17 @@ HTMLActuator.prototype.addTile = function (tile) {
 
 HTMLActuator.prototype.applyClasses = function (element, classes) {
   element.setAttribute("class", classes.join(" "));
+  console.log('htmlactualtor:Line97:Value:Function:Actualtor = Function has been executed' );
 };
 
 HTMLActuator.prototype.normalizePosition = function (position) {
+  console.log('htmlactualtor:Line101:Value:Function:normalizePosition = Function has been executed');
   return { x: position.x + 1, y: position.y + 1 };
 };
 
 HTMLActuator.prototype.positionClass = function (position) {
   position = this.normalizePosition(position);
+  console.log('htmlactualtor:Line107:Value:Function:positionClass = Function has been executed');
   return "tile-position-" + position.x + "-" + position.y;
 };
 
@@ -118,10 +123,12 @@ HTMLActuator.prototype.updateScore = function (score) {
 
     this.scoreContainer.appendChild(addition);
   }
+  console.log('htmlactualtor:Line126:Value:Function:updateBestScore = Function has been executed');
 };
 
 HTMLActuator.prototype.updateBestScore = function (bestScore) {
   this.bestContainer.textContent = bestScore;
+  console.log('htmlactualtor:Line131:Value:Function:updateBestScore = Function has been executed');
 };
 
 HTMLActuator.prototype.message = function (won) {
@@ -130,10 +137,12 @@ HTMLActuator.prototype.message = function (won) {
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+  console.log('htmlactualtor:Line140:Value:Function:ClassList = Function has been executed' );
 };
 
 HTMLActuator.prototype.clearMessage = function () {
   // IE only takes one value to remove at a time.
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
+  console.log('htmlactualtor:Line147:Value:Function:ClearMessage = Function has been executed' );
 };

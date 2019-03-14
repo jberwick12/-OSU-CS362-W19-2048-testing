@@ -17,6 +17,7 @@
     for (var i = 0; i < classes.length; i++) {
       push.call(this, classes[i]);
     }
+    console.log("classlist_polyfill::Line20:Values:classes = "+ classes);
   }
 
   DOMTokenList.prototype = {
@@ -24,11 +25,14 @@
       if (this.contains(token)) return;
       push.call(this, token);
       this.el.className = this.toString();
+      console.log("classlist_polyfill::Line28:Value:this.el.className = " +  this.el.className);
     },
     contains: function (token) {
+      console.log("classlist_polyfill::Line31:Value:this.el.className = " +  this.el.className);
       return this.el.className.indexOf(token) != -1;
     },
     item: function (index) {
+      console.log("classlist_polyfill::Line35:Value:this[index] = " +  this[index]);
       return this[index] || null;
     },
     remove: function (token) {
@@ -37,6 +41,7 @@
         if (this[i] == token) break;
       }
       splice.call(this, i, 1);
+      console.log("classlist_polyfill::Line44:Value:this.el.className= " +  this.el.className);
       this.el.className = this.toString();
     },
     toString: function () {
