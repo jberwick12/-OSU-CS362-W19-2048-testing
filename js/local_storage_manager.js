@@ -16,6 +16,7 @@ window.fakeStorage = {
   clear: function () {
     return this._data = {};
   }
+  console.log('local_storate:line:19:localStorage:Class = Has been executed');
 };
 
 function LocalStorageManager() {
@@ -24,6 +25,7 @@ function LocalStorageManager() {
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
+  console.log('local_storate:line28:LocalStorageManager:Function = Function has been executed');
 }
 
 LocalStorageManager.prototype.localStorageSupported = function () {
@@ -41,10 +43,12 @@ LocalStorageManager.prototype.localStorageSupported = function () {
 
 // Best score getters/setters
 LocalStorageManager.prototype.getBestScore = function () {
+  console.log('local_storate:line46:UNKNOWN:prototype.getBestScore = function has been executed');
   return this.storage.getItem(this.bestScoreKey) || 0;
 };
 
 LocalStorageManager.prototype.setBestScore = function (score) {
+  console.log('local_storate:line 51:UNKNW:prototype.bestScore = function has been executed');
   this.storage.setItem(this.bestScoreKey, score);
 };
 
@@ -59,5 +63,6 @@ LocalStorageManager.prototype.setGameState = function (gameState) {
 };
 
 LocalStorageManager.prototype.clearGameState = function () {
+  console.log('local_storate:line');
   this.storage.removeItem(this.gameStateKey);
 };

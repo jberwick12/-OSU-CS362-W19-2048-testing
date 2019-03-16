@@ -6,17 +6,16 @@ function Grid(size, previousState) {
 // Build a grid of the specified size
 Grid.prototype.empty = function () {
   var cells = [];
-
   for (var x = 0; x < this.size; x++) {
     var row = cells[x] = [];
-
     for (var y = 0; y < this.size; y++) {
       row.push(null);
     }
   }
-
+  console.log('grid::Line15:Values:cells = ' + cells);
   return cells;
 };
+
 
 Grid.prototype.fromState = function (state) {
   var cells = [];
@@ -29,7 +28,7 @@ Grid.prototype.fromState = function (state) {
       row.push(tile ? new Tile(tile.position, tile.value) : null);
     }
   }
-
+  console.log('grid::Line31:Values:cells = ' + cells);
   return cells;
 };
 
@@ -38,6 +37,7 @@ Grid.prototype.randomAvailableCell = function () {
   var cells = this.availableCells();
 
   if (cells.length) {
+    console.log('grid::Line40:Values:Array:cells = ' + Math.floor(Math.random() * cells.length));
     return cells[Math.floor(Math.random() * cells.length)];
   }
 };
@@ -50,7 +50,7 @@ Grid.prototype.availableCells = function () {
       cells.push({ x: x, y: y });
     }
   });
-
+  console.log('grid::Line53:Values:cells = ' + cells);
   return cells;
 };
 
@@ -65,11 +65,13 @@ Grid.prototype.eachCell = function (callback) {
 
 // Check if there are any cells available
 Grid.prototype.cellsAvailable = function () {
+  console.log('grid::Line68:Values:!!this.availablecells().length = ' + !!this.availableCells().length);
   return !!this.availableCells().length;
 };
 
 // Check if the specified cell is taken
 Grid.prototype.cellAvailable = function (cell) {
+  console.log('grid::Line74:Values:!this.cellOccupied(cell) = ' + !this.cellOccupied(cell));
   return !this.cellOccupied(cell);
 };
 
@@ -79,6 +81,7 @@ Grid.prototype.cellOccupied = function (cell) {
 
 Grid.prototype.cellContent = function (cell) {
   if (this.withinBounds(cell)) {
+    console.log("grid:Line85:Values:cell[][] = " + this.cells[cell.x][cell.y]);
     return this.cells[cell.x][cell.y];
   } else {
     return null;

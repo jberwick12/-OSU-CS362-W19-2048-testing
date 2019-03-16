@@ -5,6 +5,7 @@
     window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
     window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
       window[vendors[x] + 'CancelRequestAnimationFrame'];
+      console.log("animframe_polyfill::Line 8:Values:Vendors = " + vendors[x]);
   }
 
   if (!window.requestAnimationFrame) {
@@ -16,12 +17,14 @@
       },
       timeToCall);
       lastTime = currTime + timeToCall;
+      console.log("animframe_polyfill::Line 20:Values:id = " + id);
       return id;
     };
   }
 
   if (!window.cancelAnimationFrame) {
     window.cancelAnimationFrame = function (id) {
+      console.log("animframe_polyfill::Line 20:Values:TimeOut_id = " + id); // session timeout no debugging
       clearTimeout(id);
     };
   }

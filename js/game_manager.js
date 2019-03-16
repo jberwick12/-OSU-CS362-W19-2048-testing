@@ -11,6 +11,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
+  console.log('game_manager:Line 14:Function:GameManager = function has been executed');
 }
 
 // Restart the game
@@ -18,16 +19,19 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
+  console.log('game_manager:Line 22:UNKNOWN:prototype.restart = function has been executed');
 };
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
   this.keepPlaying = true;
   this.actuator.continueGame(); // Clear the game won/lost message
+  console.log('game_manager:Line 29:Function:Prototype.keepPlaying = function has been executed')
 };
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
+  console.log('game_manager:Line 34:Function:prototype.isGameTerminated = function has been executed')
   return this.over || (this.won && !this.keepPlaying);
 };
 
@@ -37,8 +41,7 @@ GameManager.prototype.setup = function () {
 
   // Reload the game from a previous game if present
   if (previousState) {
-    this.grid        = new Grid(previousState.grid.size,
-                                previousState.grid.cells); // Reload grid
+    this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
     this.over        = previousState.over;
     this.won         = previousState.won;
@@ -63,6 +66,7 @@ GameManager.prototype.addStartTiles = function () {
   for (var i = 0; i < this.startTiles; i++) {
     this.addRandomTile();
   }
+  console.log('game_manager:Line 69:Function:prototype.setup = function has been executed')
 };
 
 // Adds a tile in a random position
@@ -73,6 +77,7 @@ GameManager.prototype.addRandomTile = function () {
 
     this.grid.insertTile(tile);
   }
+  console.log('game_manager:Line 80:Function:prototype.addRandomTile = function has been executed')
 };
 
 // Sends the updated grid to the actuator
@@ -95,7 +100,7 @@ GameManager.prototype.actuate = function () {
     bestScore:  this.storageManager.getBestScore(),
     terminated: this.isGameTerminated()
   });
-
+  console.log('game_manager:Line 103:Function:prototype.actuate = function has been executed')
 };
 
 // Represent the current game as an object
@@ -107,6 +112,7 @@ GameManager.prototype.serialize = function () {
     won:         this.won,
     keepPlaying: this.keepPlaying
   };
+  console.log('game_manager:Line 115:Function:prototype.serialize = function has been executed')
 };
 
 // Save all tile positions and remove merger info
@@ -124,6 +130,7 @@ GameManager.prototype.moveTile = function (tile, cell) {
   this.grid.cells[tile.x][tile.y] = null;
   this.grid.cells[cell.x][cell.y] = tile;
   tile.updatePosition(cell);
+  console.log('game_manager:Line 133:Function:prototype.moveTile = function has been executed')
 };
 
 // Move tiles on the grid in the specified direction
@@ -188,6 +195,7 @@ GameManager.prototype.move = function (direction) {
 
     this.actuate();
   }
+  console.log('game_manager:Line 198:Function:prototype.Move = function has been executed')
 };
 
 // Get the vector representing the chosen direction
@@ -199,7 +207,7 @@ GameManager.prototype.getVector = function (direction) {
     2: { x: 0,  y: 1 },  // Down
     3: { x: -1, y: 0 }   // Left
   };
-
+  console.log('game_manager:Line 209:Function:prototype.getVector = function has been executed')
   return map[direction];
 };
 
@@ -216,6 +224,7 @@ GameManager.prototype.buildTraversals = function (vector) {
   if (vector.x === 1) traversals.x = traversals.x.reverse();
   if (vector.y === 1) traversals.y = traversals.y.reverse();
 
+  console.log('game_manager:Line 227:Function:prototype.buildTraversals = function has been executed')
   return traversals;
 };
 
@@ -236,6 +245,7 @@ GameManager.prototype.findFarthestPosition = function (cell, vector) {
 };
 
 GameManager.prototype.movesAvailable = function () {
+  console.log('game_manager:Line 248:Function:prototype.movesAvailable = function has been executed')
   return this.grid.cellsAvailable() || this.tileMatchesAvailable();
 };
 
@@ -257,16 +267,18 @@ GameManager.prototype.tileMatchesAvailable = function () {
           var other  = self.grid.cellContent(cell);
 
           if (other && other.value === tile.value) {
+            console.log('game_manager:Line 270:Function:prototype.tileMatchesAvailable:Value = true')
             return true; // These two tiles can be merged
           }
         }
       }
     }
   }
-
+  console.log('game_manager:Line 277:Function:prototype.tileMatchesAvailable:Value = false')
   return false;
 };
 
 GameManager.prototype.positionsEqual = function (first, second) {
+  console.log('game_manager:Line 282:Function:prototype.positionsEqual = function has been executed')
   return first.x === second.x && first.y === second.y;
 };
