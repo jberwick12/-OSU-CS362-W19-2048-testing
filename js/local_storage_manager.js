@@ -16,7 +16,6 @@ window.fakeStorage = {
   clear: function () {
     return this._data = {};
   }
-  console.log('local_storate:line:19:localStorage:Class = Has been executed');
 };
 
 function LocalStorageManager() {
