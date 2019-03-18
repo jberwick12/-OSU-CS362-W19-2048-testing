@@ -1,10 +1,11 @@
 function HTMLActuator() {
   this.tileContainer    = document.querySelector(".tile-container");
   this.scoreContainer   = document.querySelector(".score-container");
+  this.moveContainer    = document.querySelector('.move-container');
   this.bestContainer    = document.querySelector(".best-container");
   this.messageContainer = document.querySelector(".game-message");
   this.score = 0;
-  console.log('htmlactualtor:Line7:Value:Function:Actualtor = Actualator has been executed' );
+  console.log('htmlactualtor:Line8:Value:Function:Actualtor = Actualator has been executed' );
 }
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
@@ -21,6 +22,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
+    self.updateMoveScore(metadata.moveScore);
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
 
@@ -130,6 +132,12 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
   this.bestContainer.textContent = bestScore;
   console.log('htmlactualtor:Line131:Value:Function:updateBestScore = Function has been executed');
 };
+
+HTMLActuator.prototype.updateMoveScore = function (moveScore) {
+  this.moveContainer.textContent = moveScore;
+  console.log('htmlactualtor:Line137:Value:Function:updateMoveScore = Function has been executed');
+};
+
 
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
