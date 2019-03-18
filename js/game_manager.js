@@ -8,6 +8,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
+  this.inputManager.on("undo", this.undo.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
@@ -20,6 +21,19 @@ GameManager.prototype.restart = function () {
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
   console.log('game_manager:Line 22:UNKNOWN:prototype.restart = function has been executed');
+};
+
+//Undo last move
+GameManager.prototype.undo = function () {
+  if (this.prevState) {
+    this.grid        = new Grid(this.prevState.grid.size, this.prevState.grid.cells); // Reload grid
+    this.score       = this.prevState.score;
+    this.over        = this.prevState.over;
+    this.won         = this.prevState.won;
+    this.keepPlaying = this.prevState.keepPlaying;
+	this.storageManager.setBestScore(this.prevState.bestScore)
+	this.actuate();
+  }
 };
 
 // Keep playing after winning (allows going over 2048)
@@ -142,9 +156,12 @@ GameManager.prototype.moveTile = function (tile, cell) {
 GameManager.prototype.move = function (direction) {
   // 0: up, 1: right, 2: down, 3: left
   var self = this;
-
+  
   if (this.isGameTerminated()) return; // Don't do anything if the game's over
 
+  this.prevState = this.storageManager.getGameState();
+  this.prevState.bestScore = this.storageManager.getBestScore();
+  
   var cell, tile;
 
   var vector     = this.getVector(direction);

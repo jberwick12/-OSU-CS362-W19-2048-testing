@@ -64,6 +64,7 @@ console.log('Inputed Key from user is: ' + map[event.which])
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
+  this.bindButtonPress(".undo-button", this.undo);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
   // Respond to swipe events
@@ -126,15 +127,21 @@ KeyboardInputManager.prototype.restart = function (event) {
   console.log('keyboard_input:line:134:UNKNOWN:prototype.restart = function has been executed');
 };
 
+KeyboardInputManager.prototype.undo = function (event) {
+  event.preventDefault();
+  this.emit("undo");
+  console.log('keyboard_input:line:140:UNKNOWN:prototype.undo = function has been executed');
+};
+
 KeyboardInputManager.prototype.keepPlaying = function (event) {
   event.preventDefault();
   this.emit("keepPlaying");
-  console.log('keyboard_input:line:140:UNKNOWN:prototype.keepPlaying = has been executed');
+  console.log('keyboard_input:line:146:UNKNOWN:prototype.keepPlaying = has been executed');
 };
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
   var button = document.querySelector(selector);
   button.addEventListener("click", fn.bind(this));
   button.addEventListener(this.eventTouchend, fn.bind(this));
-  console.log('keyboard_input:line147:UNKNOWN:prototype.bindButtonPress = has been executed');
+  console.log('keyboard_input:line153:UNKNOWN:prototype.bindButtonPress = has been executed');
 };
