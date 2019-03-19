@@ -25,13 +25,14 @@ GameManager.prototype.restart = function () {
 
 //Undo last move
 GameManager.prototype.undo = function () {
-  if (this.prevState) {
+  if (this.prevState && !this.over) {
     this.grid        = new Grid(this.prevState.grid.size, this.prevState.grid.cells); // Reload grid
     this.score       = this.prevState.score;
     this.over        = this.prevState.over;
     this.won         = this.prevState.won;
     this.keepPlaying = this.prevState.keepPlaying;
-	this.storageManager.setBestScore(this.prevState.bestScore)
+	this.storageManager.setBestScore(this.prevState.bestScore);
+	this.move = this.prevState.move;
 	this.actuate();
   }
 };
@@ -161,6 +162,7 @@ GameManager.prototype.move = function (direction) {
 
   this.prevState = this.storageManager.getGameState();
   this.prevState.bestScore = this.storageManager.getBestScore();
+  this.prevState.move = this.move;
   
   var cell, tile;
 
