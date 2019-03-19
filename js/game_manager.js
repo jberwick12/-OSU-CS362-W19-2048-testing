@@ -57,11 +57,13 @@ GameManager.prototype.setup = function () {
   if (previousState) {
     this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
+    this.move        = previousState.move;
     this.over        = previousState.over;
     this.won         = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
   } else {
     this.grid        = new Grid(this.size);
+    this.move        = 0;
     this.score       = 0;
     this.over        = false;
     this.won         = false;
@@ -98,6 +100,7 @@ GameManager.prototype.addRandomTile = function () {
 GameManager.prototype.actuate = function () {
   if (this.storageManager.getBestScore() < this.score) {
     this.storageManager.setBestScore(this.score);
+    this.storageManager.setMoveScore(this.move);
   }
 
   // Clear the state when the game is over (game over only, not win)
@@ -109,6 +112,7 @@ GameManager.prototype.actuate = function () {
 
   this.actuator.actuate(this.grid, {
     score:      this.score,
+    moveScore:  this.move,
     over:       this.over,
     won:        this.won,
     bestScore:  this.storageManager.getBestScore(),
@@ -121,6 +125,7 @@ GameManager.prototype.actuate = function () {
 GameManager.prototype.serialize = function () {
   return {
     grid:        this.grid.serialize(),
+    move:       this.move,
     score:       this.score,
     over:        this.over,
     won:         this.won,
@@ -198,6 +203,7 @@ GameManager.prototype.move = function (direction) {
 
         if (!self.positionsEqual(cell, tile)) {
           moved = true; // The tile moved from its original cell!
+
         }
       }
     });
@@ -205,7 +211,7 @@ GameManager.prototype.move = function (direction) {
 
   if (moved) {
     this.addRandomTile();
-
+    self.move  += 1;
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
     }

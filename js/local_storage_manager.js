@@ -21,6 +21,7 @@ window.fakeStorage = {
 function LocalStorageManager() {
   this.bestScoreKey     = "bestScore";
   this.gameStateKey     = "gameState";
+  this.moveScoreKey      =  "moveScore"
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
@@ -38,6 +39,16 @@ LocalStorageManager.prototype.localStorageSupported = function () {
   } catch (error) {
     return false;
   }
+};
+
+LocalStorageManager.prototype.getMoveScore = function () {
+  console.log('local_storate:line45:UNKNOWN:prototype.getMoveScore = function has been executed');
+  return this.storage.getItem(this.moveScoreKey) || 0;
+};
+
+LocalStorageManager.prototype.setMoveScore = function (score) {
+  console.log('local_storate:line 50:UNKNW:prototype.setMoveScore = function has been executed');
+  this.storage.setItem(this.moveScoreKey, score);
 };
 
 // Best score getters/setters
